@@ -12,6 +12,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import jxl.Cell;
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.WorkbookSettings;
+
 /**
  * Assitant Helper:
  * the class will supply static methods for grunt xml node, read txt or csv/xls content.
@@ -63,22 +68,19 @@ public class AssitantHelper extends BaseHelper {
 		String header = gruntXmlHeader(
 				getConfigKeyValueMap().get(Constants.TestNG_Listener), 
 				getConfigKeyValueMap().get(Constants.Is_Parallel), 
-				getConfigKeyValueMap().get(Constants.Single_Instance));
+				getConfigKeyValueMap().get(Constants.Is_Single_Instance));
 		// content strings.
-		String xmlContent = "", nodeContent = "";
-		if (isSheet) return;
-		else {
-			File file = new File(getConfigKeyValueMap().get(Constants.Extract_File_Path));
-			nodeContent = loadTxtFileContent(file);
-		}
-		String footer = gruntXmlFooter();
-		// #.build xml to file.
-		xmlContent = sbuilder.append(header).append(nodeContent).append(footer).toString();
-		createNewXmlFile(xmlContent);
+		File file = new File(getConfigKeyValueMap().get(Constants.Extract_File_Path));
+        String xmlContent = "", nodeContent = "";
+        if (isSheet) nodeContent = loadCsvFileContent(file);
+        else nodeContent = loadTxtFileContent(file);
+        String footer = gruntXmlFooter();
+        // #.build xml to file.
+        xmlContent = sbuilder.append(header).append(nodeContent).append(footer).toString();
+        createNewXmlFile(xmlContent);
 	}
 
 	private static String loadTxtFileContent(File file) throws Exception {
-
 		InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(file), Constants.Default_Encoding);
 		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 		try {
@@ -86,16 +88,15 @@ public class AssitantHelper extends BaseHelper {
 			while ((lineCxt = bufferedReader.readLine()) != null) {
 				if (lineCxt.trim().length() > 0) {
 					String[] multiParts = lineCxt.trim().split(EmptySpace);
-					int index = multiParts[0].lastIndexOf(".");
-					lineCxt = multiParts[0].substring(index + 1) + "." + multiParts[1];
-					System.out.println(lineCxt);
-				}
-				String[] splitStrs = lineCxt.split("[.]");
-				if (splitStrs.length > 1) {
-					AnalysisHelper.searchClasFullName(getConfigKeyValueMap().get(Constants.Base_Dir_Path), 
-							splitStrs[0].trim(), splitStrs[1].trim());
-				}
-			}
+                    if (multiParts.length > 1) {
+                        boolean isFullClassName = (multiParts[0].split("[.]").length > 1);
+                        String fullClassName = (isFullClassName ? 
+                                multiParts[0].trim() : AnalysisHelper.getFullPackageClassName(multiParts[0].trim()));
+                        String methodName = multiParts[1].trim();
+                        addNodeClassName2Map(fullClassName, methodName);
+                    }
+                }
+            }
 			if (bufferedReader != null) bufferedReader.close();
 			if (inputStreamReader != null) inputStreamReader.close();
 		} catch (Exception ex) {
@@ -106,6 +107,37 @@ public class AssitantHelper extends BaseHelper {
 		return AssitantHelper.buildXmlNodeFormat(getSuiteNodeClassNameMap());
 	}
 
+	public static String loadCsvFileContent(File file) throws Exception {
+	    String[] headNames = {"Package", "Class", "Method (Test Name)", "Result"};
+	    String filterStatus = getConfigKeyValueMap().get(Constants.Filte_Result_Status);
+	    int[] columnIndexs = new int[headNames.length]; 
+	    
+		Workbook workbook = null;
+		WorkbookSettings workbookSettings = new WorkbookSettings();
+		workbookSettings.setEncoding(Constants.Default_Encoding);
+		workbook = Workbook.getWorkbook(file, workbookSettings);
+		
+	    Sheet sheet = workbook.getSheet(0);
+	    Cell[] headerColumns = sheet.getRow(0);
+	    for (int i = 0, M = headerColumns.length; i < M; i++) {
+            for (int j = 0, N = headNames.length; j<N; j++) {
+                if (headerColumns[i].getContents().trim().contains(headNames[j])) columnIndexs[j] = i;
+            }
+        }
+	    int p = columnIndexs[0], c = columnIndexs[1], m = columnIndexs[2], s = columnIndexs[3];
+	    for (int r = 1, R = sheet.getRows(); r < R; r++) {
+            Cell[] cells = sheet.getRow(r);
+            
+            String status = cells[s].getContents().trim().toUpperCase();
+            if (filterStatus.contains(status) | status.contains(filterStatus)) {
+                String fullClassName = cells[p].getContents().trim() + cells[c].getContents().trim();
+                String methodName = cells[m].getContents().trim();
+                addNodeClassName2Map(fullClassName, methodName);
+            }
+        }
+	    return AssitantHelper.buildXmlNodeFormat(getSuiteNodeClassNameMap());
+	}
+	
 	private static void createNewXmlFile(String xmlContent) throws Exception {
 		String outputPath = getConfigKeyValueMap().get(Constants.Output_Xml_Path);
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd-ss");
