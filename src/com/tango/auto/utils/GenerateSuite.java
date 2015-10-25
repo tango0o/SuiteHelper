@@ -23,10 +23,11 @@ public class GenerateSuite {
 			new BaseHelper();
 			break;
 		case 1:
-			if (args[0].toLowerCase().trim().equals("-h") & args[0].toLowerCase().trim().equals("/h")) System.out.println(Constants.Usage_Description);
+			if (args[0].toLowerCase().trim().equals("-h") | 
+			        args[0].toLowerCase().trim().equals("/h")) System.out.println(Constants.Usage_Description);
 			break;
 		default:
-			System.out.println();
+			System.out.println("Default End.");
 			break;
 		}
 		return arg_count;
