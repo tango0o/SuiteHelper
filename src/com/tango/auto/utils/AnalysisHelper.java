@@ -35,7 +35,14 @@ public class AnalysisHelper extends BaseHelper {
     }
 
     public static String getFullPackageClassName(String simpleClassName) {
+<<<<<<< HEAD
         searchFullClassName(simpleClassName, getConfigKeyValueMap().get(Constants.Base_Dir_Path));
+=======
+        long beginTime = System.currentTimeMillis();
+        searchFullClassName(simpleClassName, getConfigKeyValueMap().get(Constants.Base_Dir_Path));
+        long endTime = System.currentTimeMillis();
+        System.out.println("Search Class Name Elapsed Time: " + (endTime - beginTime));
+>>>>>>> de72b7a42a154cdf70855dc35fb58798c415ad15
         return resultPackageClassName;
     }
 }

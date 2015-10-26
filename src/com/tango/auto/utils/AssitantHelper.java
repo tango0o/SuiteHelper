@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,7 +16,10 @@ import java.util.Map;
 import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
+<<<<<<< HEAD
 import jxl.WorkbookSettings;
+=======
+>>>>>>> de72b7a42a154cdf70855dc35fb58798c415ad15
 
 /**
  * Assitant Helper:
@@ -72,7 +76,11 @@ public class AssitantHelper extends BaseHelper {
 		// content strings.
 		File file = new File(getConfigKeyValueMap().get(Constants.Extract_File_Path));
         String xmlContent = "", nodeContent = "";
+<<<<<<< HEAD
         if (isSheet) nodeContent = loadCsvFileContent(file);
+=======
+        if (isSheet) return;
+>>>>>>> de72b7a42a154cdf70855dc35fb58798c415ad15
         else nodeContent = loadTxtFileContent(file);
         String footer = gruntXmlFooter();
         // #.build xml to file.
@@ -111,12 +119,18 @@ public class AssitantHelper extends BaseHelper {
 	    String[] headNames = {"Package", "Class", "Method (Test Name)", "Result"};
 	    String filterStatus = getConfigKeyValueMap().get(Constants.Filte_Result_Status);
 	    int[] columnIndexs = new int[headNames.length]; 
+<<<<<<< HEAD
 	    
 		Workbook workbook = null;
 		WorkbookSettings workbookSettings = new WorkbookSettings();
 		workbookSettings.setEncoding(Constants.Default_Encoding);
 		workbook = Workbook.getWorkbook(file, workbookSettings);
 		
+=======
+	    Workbook workbook = null;
+	    InputStream inputStream = new FileInputStream(file);
+	    workbook = Workbook.getWorkbook(inputStream);
+>>>>>>> de72b7a42a154cdf70855dc35fb58798c415ad15
 	    Sheet sheet = workbook.getSheet(0);
 	    Cell[] headerColumns = sheet.getRow(0);
 	    for (int i = 0, M = headerColumns.length; i < M; i++) {
