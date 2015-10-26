@@ -3,8 +3,6 @@ package com.tango.auto.utils;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
-
 public class GenerateSuite {
 
 	public static void main(String[] args) throws Exception {

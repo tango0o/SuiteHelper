@@ -6,12 +6,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
 import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
@@ -116,8 +116,10 @@ public class AssitantHelper extends BaseHelper {
 		WorkbookSettings workbookSettings = new WorkbookSettings();
 		workbookSettings.setEncoding(Constants.Default_Encoding);
 		workbook = Workbook.getWorkbook(file, workbookSettings);
-		
+	    InputStream inputStream = new FileInputStream(file);
+	    workbook = Workbook.getWorkbook(inputStream);
 	    Sheet sheet = workbook.getSheet(0);
+	    
 	    Cell[] headerColumns = sheet.getRow(0);
 	    for (int i = 0, M = headerColumns.length; i < M; i++) {
             for (int j = 0, N = headNames.length; j<N; j++) {
