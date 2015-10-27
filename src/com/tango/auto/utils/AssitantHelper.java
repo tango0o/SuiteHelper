@@ -66,11 +66,11 @@ public class AssitantHelper extends BaseHelper {
 	public static void executeActions(boolean isSheet) throws Exception {
 		StringBuilder sbuilder = new StringBuilder();
 		String header = gruntXmlHeader(
-				getConfigKeyValueMap().get(Constants.TestNG_Listener), 
-				getConfigKeyValueMap().get(Constants.Is_Parallel), 
-				getConfigKeyValueMap().get(Constants.Is_Single_Instance));
+				getConfigKeyValue(Constants.TestNG_Listener), 
+				getConfigKeyValue(Constants.Is_Parallel), 
+				getConfigKeyValue(Constants.Is_Single_Instance));
 		// content strings.
-		File file = new File(getConfigKeyValueMap().get(Constants.Extract_File_Path));
+		File file = new File(getConfigKeyValue(Constants.Extract_File_Path));
         String xmlContent = "", nodeContent = "";
         if (isSheet) nodeContent = loadCsvFileContent(file);
         else nodeContent = loadTxtFileContent(file);
@@ -109,7 +109,7 @@ public class AssitantHelper extends BaseHelper {
 
 	public static String loadCsvFileContent(File file) throws Exception {
 	    String[] headNames = {"Package", "Class", "Method (Test Name)", "Result"};
-	    String filterStatus = getConfigKeyValueMap().get(Constants.Filte_Result_Status);
+	    String filterStatus = getConfigKeyValue(Constants.Filte_Result_Status);
 	    int[] columnIndexs = new int[headNames.length]; 
 	    
 		Workbook workbook = null;
@@ -141,7 +141,7 @@ public class AssitantHelper extends BaseHelper {
 	}
 	
 	private static void createNewXmlFile(String xmlContent) throws Exception {
-		String outputPath = getConfigKeyValueMap().get(Constants.Output_Xml_Path);
+		String outputPath = getConfigKeyValue(Constants.Output_Xml_Path);
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd-ss");
 		String formatedDtime = simpleDateFormat.format(new Date());
 		String filePath = outputPath + Constants.TestNG_File_Name + formatedDtime + Constants.File_Extension_XML;

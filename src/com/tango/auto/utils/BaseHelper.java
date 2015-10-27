@@ -19,10 +19,14 @@ public class BaseHelper {
         suiteNodeClassNameMap = new HashMap<String, List<String>>();
     }
 
-    public static Map<String, String> getConfigKeyValueMap() {
+/*    public static Map<String, String> getConfigKeyValueMap() {
         return configKeyValueMap;
+    }*/
+    
+    public static String getConfigKeyValue(String key) {
+    	return configKeyValueMap.get(key).trim();
     }
-
+    
     public static void setSuiteNodeClassNameMap(Map<String, List<String>> map) {
         suiteNodeClassNameMap = map;
     }
@@ -34,7 +38,7 @@ public class BaseHelper {
     private static Map<String, String> loadConfiguration(String configName, String... configKeys) {
         Properties properties = new Properties();
         Map<String, String> configKeyValueMap = new HashMap<String, String>();
-        InputStream inputStream = AssitantHelper.class.getResourceAsStream("/" + configName);
+        InputStream inputStream = BaseHelper.class.getResourceAsStream("/" + configName);
         try {
             properties.load(inputStream);
             configKeyValueMap.clear();

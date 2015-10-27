@@ -10,7 +10,7 @@ public class GenerateSuite {
 		if (initHelpDescription(args) == 0) {
 			long beginTime = System.currentTimeMillis();
 			
-			String extractFilePath = BaseHelper.getConfigKeyValueMap().get(Constants.Extract_File_Path);
+			String extractFilePath = BaseHelper.getConfigKeyValue(Constants.Extract_File_Path);
 			File file = new File(extractFilePath).getAbsoluteFile();
 			if (!file.exists()) throw new FileNotFoundException(String.format(Constants.Warning_No_File_Format, extractFilePath));
 			boolean isSheet = file.getName().endsWith(Constants.File_Extension_CSV) | file.getName().endsWith(Constants.File_Extension_XLS);

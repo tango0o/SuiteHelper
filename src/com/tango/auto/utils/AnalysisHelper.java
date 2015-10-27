@@ -14,8 +14,8 @@ public class AnalysisHelper extends BaseHelper {
             else {
                 String currentFileName = unknowFile[k].getName().replace(".java", "");
                 if (currentFileName.equals(simpleClassName)) {
-                    String currentDir = tmpFile.getPath(), beginFolderName = getConfigKeyValueMap().get(Constants.Beigin_Folder_Name);
-                    int folderLevels = Integer.parseInt(getConfigKeyValueMap().get(Constants.Max_Folder_Levels));
+                    String currentDir = tmpFile.getPath(), beginFolderName = getConfigKeyValue(Constants.Beigin_Folder_Name);
+                    int folderLevels = Integer.parseInt(getConfigKeyValue(Constants.Max_Folder_Levels));
                     int index = currentDir.indexOf(beginFolderName + "\\");
                     String prefixName = currentDir.substring(index + beginFolderName.length());
                     resultPackageClassName = checkReplaceAll(prefixName, folderLevels) + "." + simpleClassName;
@@ -35,9 +35,9 @@ public class AnalysisHelper extends BaseHelper {
     }
 
     public static String getFullPackageClassName(String simpleClassName) {
-        searchFullClassName(simpleClassName, getConfigKeyValueMap().get(Constants.Base_Dir_Path));
+        searchFullClassName(simpleClassName, getConfigKeyValue(Constants.Base_Dir_Path));
         long beginTime = System.currentTimeMillis();
-        searchFullClassName(simpleClassName, getConfigKeyValueMap().get(Constants.Base_Dir_Path));
+        searchFullClassName(simpleClassName, getConfigKeyValue(Constants.Base_Dir_Path));
         long endTime = System.currentTimeMillis();
         System.out.println("Search Class Name Elapsed Time: " + (endTime - beginTime));
         return resultPackageClassName;

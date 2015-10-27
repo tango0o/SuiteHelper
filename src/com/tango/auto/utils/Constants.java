@@ -14,7 +14,7 @@ public interface Constants {
 
 	final static String	Default_Encoding		= "utf-8";
 	final static String	Warning_No_File_Format	= "Sorry, File: [%s] is NOT exist, check it config!";
-	final static String	Usage_Description		= "Usage: java SuiteHelper.jar";
+	final static String	Usage_Description		= "Usage: java -jar SuiteHelper.jar";
 	final static String	End_Of_Generation		= "End of genaeration-Suite.";
 	final static String	File_Extension_CSV		= ".csv";
 	final static String	File_Extension_XLS		= ".xls";
