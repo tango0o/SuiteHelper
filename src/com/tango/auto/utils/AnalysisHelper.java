@@ -35,7 +35,6 @@ public class AnalysisHelper extends BaseHelper {
     }
 
     public static String getFullPackageClassName(String simpleClassName) {
-        searchFullClassName(simpleClassName, getConfigKeyValue(Constants.Base_Dir_Path));
         long beginTime = System.currentTimeMillis();
         searchFullClassName(simpleClassName, getConfigKeyValue(Constants.Base_Dir_Path));
         long endTime = System.currentTimeMillis();
