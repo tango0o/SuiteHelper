@@ -23,8 +23,8 @@ public class GenerateSuite {
 	}
 
 	private static int initHelpDescription(String[] args) {
-		int arg_count = args.length;
-		switch (arg_count) {
+		int argCount = args.length;
+		switch (argCount) {
 		case 0:
 			new BaseHelper();
 			break;
@@ -36,6 +36,6 @@ public class GenerateSuite {
 			System.out.println("Default End.");
 			break;
 		}
-		return arg_count;
+		return argCount;
 	}
 }

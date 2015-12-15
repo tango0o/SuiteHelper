@@ -63,13 +63,23 @@ public class AssitantHelper extends BaseHelper {
 		return sbuilder.toString();
 	}
 	
+	public static boolean isWindowOS() {
+		try {
+			String os = System.getProperty("os.name").trim().toLowerCase();
+			if (os.contains(Constants.Env_OS_Platform.toLowerCase())) return true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return false;
+	}
+	
 	public static void executeActions(boolean isSheet) throws Exception {
 		StringBuilder sbuilder = new StringBuilder();
 		String header = gruntXmlHeader(
 				getConfigKeyValue(Constants.TestNG_Listener), 
 				getConfigKeyValue(Constants.Is_Parallel), 
 				getConfigKeyValue(Constants.Is_Single_Instance));
-		// content strings.
+		// #.content strings.
 		File file = new File(getConfigKeyValue(Constants.Extract_File_Path));
         String xmlContent = "", nodeContent = "";
         if (isSheet) nodeContent = loadCsvFileContent(file);
@@ -142,7 +152,7 @@ public class AssitantHelper extends BaseHelper {
 	
 	private static void createNewXmlFile(String xmlContent) throws Exception {
 		String outputPath = getConfigKeyValue(Constants.Output_Xml_Path);
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd-ss");
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd-ssss");
 		String formatedDtime = simpleDateFormat.format(new Date());
 		String filePath = outputPath + Constants.TestNG_File_Name + formatedDtime + Constants.File_Extension_XML;
 		File file = new File(filePath);

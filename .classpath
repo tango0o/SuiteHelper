@@ -2,6 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/tango/.ivy2/offline_jars/jxl-2.6.jar"/>
+	<classpathentry kind="lib" path="/home/tango/Dev/User_jars/jxl-2.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

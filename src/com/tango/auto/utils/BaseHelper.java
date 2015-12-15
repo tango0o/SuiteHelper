@@ -19,10 +19,6 @@ public class BaseHelper {
         suiteNodeClassNameMap = new HashMap<String, List<String>>();
     }
 
-/*    public static Map<String, String> getConfigKeyValueMap() {
-        return configKeyValueMap;
-    }*/
-    
     public static String getConfigKeyValue(String key) {
     	return configKeyValueMap.get(key).trim();
     }
