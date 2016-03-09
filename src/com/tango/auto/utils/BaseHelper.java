@@ -18,6 +18,15 @@ public class BaseHelper {
                 Constants.TestNG_Listener, Constants.Is_Parallel, Constants.Is_Single_Instance });
         suiteNodeClassNameMap = new HashMap<String, List<String>>();
     }
+    
+    public BaseHelper(String baseDirPath, String beginFolderName, int maxFolderLevels, String extractFilePath, String outputXmlPath) {
+        this();
+        configKeyValueMap.put(Constants.Base_Dir_Path, baseDirPath);
+        configKeyValueMap.put(Constants.Beigin_Folder_Name, beginFolderName);
+        configKeyValueMap.put(Constants.Max_Folder_Levels, String.valueOf(maxFolderLevels));
+        configKeyValueMap.put(Constants.Extract_File_Path, extractFilePath);
+        configKeyValueMap.put(Constants.Output_Xml_Path, outputXmlPath);
+    }
 
     public static String getConfigKeyValue(String key) {
     	return configKeyValueMap.get(key).trim();

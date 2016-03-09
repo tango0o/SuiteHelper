@@ -142,7 +142,7 @@ public class AssitantHelper extends BaseHelper {
             
             String status = cells[s].getContents().trim().toUpperCase();
             if (filterStatus.contains(status) | status.contains(filterStatus)) {
-                String fullClassName = cells[p].getContents().trim() + cells[c].getContents().trim();
+                String fullClassName = cells[p].getContents().trim() + "." + cells[c].getContents().trim();
                 String methodName = cells[m].getContents().trim();
                 addNodeClassName2Map(fullClassName, methodName);
             }
