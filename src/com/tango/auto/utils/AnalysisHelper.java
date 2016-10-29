@@ -24,15 +24,15 @@ public class AnalysisHelper extends BaseHelper {
             }
         }
     }
-    
-	private static String checkReplaceAll(String prefixName, int maxChecks) {
-		for (int check = 1; check <= maxChecks; check++) {
-			if (prefixName.contains(File.separator)) {
-				prefixName = prefixName.replace(File.separator, ".").substring(1);
-			}
-		}
-		return prefixName;
-	}
+
+    private static String checkReplaceAll(String prefixName, int maxChecks) {
+        for (int check = 1; check <= maxChecks; check++) {
+            if (prefixName.contains(File.separator)) {
+                prefixName = prefixName.replace(File.separator, ".").substring(1);
+            }
+        }
+        return prefixName;
+    }
 
     public static String getFullPackageClassName(String simpleClassName) {
         long beginTime = System.currentTimeMillis();
